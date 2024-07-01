@@ -1,0 +1,29 @@
+
+body, html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  padding: 20px;
+  max-width: 600px;
+  text-align: center;
+}
+
+.video-card {
+  margin: 20px 0;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.video-card img {
+  width: 100%;
+  height: auto;
+}
+
+/* Import Sidebar Styles */
+@import url('../js/components/sidebar/sidebar.css');
+
