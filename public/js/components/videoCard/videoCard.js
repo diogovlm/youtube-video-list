@@ -1,12 +1,14 @@
-export function createVideoCard(item) {
+export function createVideoCard(video) {
   const videoElement = document.createElement('div');
-  videoElement.className = 'video-card';
+  videoElement.classList.add('video-card');
 
   videoElement.innerHTML = `
-      <h3 class="video-title">${item.snippet.title}</h3>
-      <img class="video-thumbnail" src="${item.snippet.thumbnails.default.url}" alt="${item.snippet.title}">
-      <p class="video-description">${item.snippet.description}</p>
+      <img src="${video.snippet.thumbnails.medium.url}" alt="${video.snippet.title}" class="video-thumbnail" data-video-id="${video.id.videoId}">
   `;
+
+  videoElement.querySelector('.video-thumbnail').addEventListener('click', () => {
+      window.open(`https://www.youtube.com/watch?v=${video.id.videoId}`, '_blank');
+  });
 
   return videoElement;
 }
