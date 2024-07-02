@@ -6,7 +6,7 @@ exports.fetchYouTubeData = async (query, pageToken = '') => {
     const response = await axios.get(apiUrl, {
       params: {
         part: 'snippet',
-        maxResults: 16,
+        maxResults: 20,
         q: query,
         type: 'video',
         key: config.youtubeApiKey,
