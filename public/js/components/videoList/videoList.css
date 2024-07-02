@@ -1,21 +1,5 @@
 .video-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.video-card {
-  position: relative;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-.video-card:hover {
-  transform: scale(1.05);
-}
-
-.video-thumbnail {
-  width: 100%;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  justify-content: space-evenly;
 }

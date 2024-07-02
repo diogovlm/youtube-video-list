@@ -1,0 +1,19 @@
+.video-card {
+  margin: 20px 0;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.video-card img {
+  width: 100%;
+  height: auto;
+}
+
+.video-card:hover {
+  transform: scale(1.05);
+}
+
+.video-thumbnail {
+  width: 100%;
+}
