@@ -1,14 +1,28 @@
 export function createVideoCard(video) {
-  const videoElement = document.createElement('div');
-  videoElement.classList.add('video-card');
-
-  videoElement.innerHTML = `
-    <img src="${video.snippet.thumbnails.medium.url}" alt="${video.snippet.title}" class="video-thumbnail" data-video-id="${video.id.videoId}">
+  const cardTemplate = document.createElement('template');
+  cardTemplate.innerHTML = `
+    <div class="video-card">
+      <img class="video-thumbnail" src="${video.snippet.thumbnails.default.url}" alt="Video Thumbnail">
+      <div class="star-toggle">
+        <span class="star">&#9733;</span> <!-- Unicode star character -->
+      </div>
+    </div>
   `;
 
-  videoElement.querySelector('.video-thumbnail').addEventListener('click', () => {
-    window.open(`https://www.youtube.com/watch?v=${video.id.videoId}`, '_blank');
+  const cardElement = cardTemplate.content.firstElementChild;
+
+  const starToggle = cardElement.querySelector('.star-toggle .star');
+
+  // Commented out parameter that will determine initial state
+  // if (video.isFavorited) {
+  //     starToggle.classList.add('favorited');
+  // }
+
+  starToggle.addEventListener('click', () => {
+    starToggle.classList.toggle('favorited');
+    // Placeholder for future method
+    // handleStarToggle(video.id, starToggle.classList.contains('favorited'));
   });
 
-  return videoElement;
+  return cardElement;
 }
