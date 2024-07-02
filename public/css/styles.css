@@ -10,8 +10,6 @@ body, html {
   float: left;
   margin-left: 20%;
   padding: 20px;
-  max-width: 600px;
-  text-align: center;
 }
 
 .video-card {
@@ -25,7 +23,3 @@ body, html {
   width: 100%;
   height: auto;
 }
-
-/* Import Sidebar Styles */
-@import url('../js/components/sidebar/sidebar.css');
-
