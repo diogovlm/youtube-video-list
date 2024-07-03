@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadFavorites(userUid) {
   if (!userUid) {
-    return;
+    return [];
   }
 
   try {
@@ -41,12 +41,14 @@ async function loadFavorites(userUid) {
 
     if (response.ok) {
       updateFavoriteCount(favorites.length);
-      console.log(userUid)
+      return favorites
     } else {
       console.error('Failed to load favorites:', favorites.message);
+      return [];
     }
   } catch (error) {
     console.error('Error loading favorites:', error);
+    return []
   }
 }
 
@@ -55,4 +57,4 @@ function updateFavoriteCount(count) {
   favoriteCountElement.textContent = count;
 }
 
-export { auth, app, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut }
+export { loadFavorites, auth, app, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut }
