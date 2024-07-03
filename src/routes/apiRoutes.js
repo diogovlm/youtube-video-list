@@ -25,7 +25,8 @@ router.post('/favorites', async (req, res) => {
       favorite = new Favorite({ userId, video });
       await favorite.save();
     }
-    res.status(200).json({ message: 'Video added to favorites', favorite });
+    const favorites = await Favorite.find();
+    res.status(200).json({ message: 'Video added to favorites', newCount: favorites.length });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error });
   }
@@ -37,7 +38,8 @@ router.delete('/favorites', async (req, res) => {
   const Favorite = getFavoriteModel(userId);
   try {
     await Favorite.deleteOne({ 'video.id': videoId });
-    res.status(200).json({ message: 'Video removed from favorites' });
+    const favorites = await Favorite.find();
+    res.status(200).json({ message: 'Video removed from favorites', newCount: favorites.length });
   } catch (error) {
     console.error('ServerError:', error);
     res.status(500).json({ message: 'Server error', error });
