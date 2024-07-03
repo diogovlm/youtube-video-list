@@ -15,41 +15,68 @@ export function createVideoCard(video) {
 
   const starToggle = cardElement.querySelector('.star-toggle .star');
 
-  // Commented out parameter that will determine initial state
-  // if (video.isFavorited) {
-  //     starToggle.classList.add('favorited');
-  // }
-
-  starToggle.addEventListener('click', () => {
+  
+  starToggle.addEventListener('click', async () => {
     starToggle.classList.toggle('favorited');
-    addToFavorites(video)
+    if (starToggle.classList.contains('favorited')) {
+      await addToFavorites(video);
+    } else {
+      await removeFromFavorites(video);
+    }
   });
 
-async function addToFavorites(video) {
-  const user = auth.currentUser;
-  if (!user) {
-    alert('Please log in to add favorites.');
-    return;
+  async function addToFavorites(video) {
+    const user = auth.currentUser;
+    if (!user) {
+      alert('Please log in to add favorites.');
+      return;
+    }
+
+    const response = await fetch('/api/favorites', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId: user.uid,
+        video,
+      }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      alert(data.message);
+    } else {
+      alert(data.message || 'Failed to add favorite');
+    }
   }
 
-  const response = await fetch('/api/favorites', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      userId: user.uid,
-      video,
-    }),
-  });
+  async function removeFromFavorites(video) {
+    const user = auth.currentUser;
+    if (!user) {
+      alert('Please log in to remove favorites.');
+      return;
+    }
 
-  const data = await response.json();
-  if (response.ok) {
-    alert(data.message);
-  } else {
-    alert(data.message || 'Failed to add favorite');
+    const response = await fetch('/api/favorites', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId: user.uid,
+        video,
+      }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      alert(data.message);
+    } else {
+      console.error(data.error);
+      alert(data.message || 'Failed to remove favorite');
+    }
   }
-}
 
   return cardElement;
 }

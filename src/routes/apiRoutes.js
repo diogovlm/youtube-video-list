@@ -10,7 +10,6 @@ function getFavoriteModel(userId) {
   return mongoose.model(collectionName, favoriteSchema, collectionName);
 }
 
-
 router.post('/initFavoriteModel', (req, res) => {
   const { userId } = req.body;
   getFavoriteModel(userId);
@@ -28,6 +27,19 @@ router.post('/favorites', async (req, res) => {
     }
     res.status(200).json({ message: 'Video added to favorites', favorite });
   } catch (error) {
+    res.status(500).json({ message: 'Server error', error });
+  }
+});
+
+router.delete('/favorites', async (req, res) => {
+  const { userId, video } = req.body;
+  const videoId = video.id;
+  const Favorite = getFavoriteModel(userId);
+  try {
+    await Favorite.deleteOne({ 'video.id': videoId });
+    res.status(200).json({ message: 'Video removed from favorites' });
+  } catch (error) {
+    console.error('ServerError:', error);
     res.status(500).json({ message: 'Server error', error });
   }
 });
