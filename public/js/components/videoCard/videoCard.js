@@ -1,6 +1,6 @@
 import { auth } from '../../firebase.js'
 
-export function createVideoCard(video) {
+export function createVideoCard(video, favorites = []) {
   const cardTemplate = document.createElement('template');
   cardTemplate.innerHTML = `
     <div class="video-card">
@@ -12,8 +12,12 @@ export function createVideoCard(video) {
   `;
 
   const cardElement = cardTemplate.content.firstElementChild;
-
   const starToggle = cardElement.querySelector('.star-toggle .star');
+
+  const isFavorited = favorites.some(fav => fav.video.id.videoId === video.id.videoId);
+  if (isFavorited) {
+    starToggle.classList.add('favorited');
+  }
 
   starToggle.addEventListener('click', async () => {
     starToggle.classList.toggle('favorited');
@@ -87,5 +91,9 @@ async function removeFromFavorites(video) {
 
 function updateFavoriteCount(count) {
   const favoriteCountElement = document.getElementById('favoriteCount');
-  favoriteCountElement.textContent = count;
+  if (favoriteCountElement) {
+    favoriteCountElement.textContent = count;
+  } else {
+    console.error('Favorite count element not found');
+  }
 }
