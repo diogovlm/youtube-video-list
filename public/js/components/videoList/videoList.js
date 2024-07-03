@@ -1,11 +1,10 @@
 import { createVideoCard } from '../videoCard/videoCard.js';
-import { auth, loadFavorites } from '../../firebase.js'
+import { auth, loadFavorites } from '/js/firebase.js'
 
 export async function setupVideoList(videos, clear = true) {
 
   const user = auth.currentUser;
   let favorites = [];
-  
   if (user) {
     favorites = await loadFavorites(user.uid);
   }

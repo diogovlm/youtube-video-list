@@ -20,7 +20,7 @@ router.post('/favorites', async (req, res) => {
   const { userId, video } = req.body;
   const Favorite = getFavoriteModel(userId);
   try {
-    let favorite = await Favorite.findOne({ userId, video });
+    let favorite = await Favorite.findOne({ video });
     if (!favorite) {
       favorite = new Favorite({ userId, video });
       await favorite.save();
