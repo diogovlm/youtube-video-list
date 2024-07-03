@@ -1,3 +1,5 @@
+import { auth } from '../../firebase.js'
+
 export function createVideoCard(video) {
   const cardTemplate = document.createElement('template');
   cardTemplate.innerHTML = `
@@ -20,9 +22,34 @@ export function createVideoCard(video) {
 
   starToggle.addEventListener('click', () => {
     starToggle.classList.toggle('favorited');
-    // Placeholder for future method
-    // handleStarToggle(video.id, starToggle.classList.contains('favorited'));
+    addToFavorites(video)
   });
+
+async function addToFavorites(video) {
+  const user = auth.currentUser;
+  if (!user) {
+    alert('Please log in to add favorites.');
+    return;
+  }
+
+  const response = await fetch('/api/favorites', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      userId: user.uid,
+      video,
+    }),
+  });
+
+  const data = await response.json();
+  if (response.ok) {
+    alert(data.message);
+  } else {
+    alert(data.message || 'Failed to add favorite');
+  }
+}
 
   return cardElement;
 }
