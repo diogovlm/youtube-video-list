@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-app.js";
-import { getAuth, onAuthStateChanged  } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -20,31 +20,39 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    initializeFavoriteModel(user.uid);
-  } else {
-    console.log('No user is logged in');
-  }
+document.addEventListener('DOMContentLoaded', () => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      loadFavorites(user.uid);
+    } else {
+      console.log('No user is logged in');
+    }
+  });
 });
 
-async function initializeFavoriteModel(userId) {
+async function loadFavorites(userUid) {
+  if (!userUid) {
+    return;
+  }
+
   try {
-    const response = await fetch(`/api/initFavoriteModel`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ userId }),
-    });
+    const response = await fetch(`/api/favorites/${userUid}`);
+    const favorites = await response.json();
+
     if (response.ok) {
-      console.log('Favorite model initialized');
+      updateFavoriteCount(favorites.length);
+      console.log(userUid)
     } else {
-      console.error('Failed to initialize favorite model');
+      console.error('Failed to load favorites:', favorites.message);
     }
   } catch (error) {
-    console.error('Error initializing favorite model:', error);
+    console.error('Error loading favorites:', error);
   }
 }
 
-export { auth, app }
+function updateFavoriteCount(count) {
+  const favoriteCountElement = document.getElementById('favoriteCount');
+  favoriteCountElement.textContent = count;
+}
+
+export { auth, app, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut }
