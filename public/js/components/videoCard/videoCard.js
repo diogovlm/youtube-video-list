@@ -1,4 +1,4 @@
-import { auth } from '/js/firebase.js'
+import { auth } from '../../firebase.js'
 
 export function createVideoCard(video, favorites = []) {
   const cardTemplate = document.createElement('template');
