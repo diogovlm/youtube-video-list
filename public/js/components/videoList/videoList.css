@@ -2,18 +2,23 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  padding: 10px;
 }
 
 .video-card {
-  margin: 20px 0;
+  margin: 10px;
+  width: calc(25% - 20px);
   position: relative;
   cursor: pointer;
   transition: transform 0.3s ease;
+  background-color: #222;
+  border-radius: 8px;
 }
 
 .video-card img {
   width: 100%;
   height: auto;
+  border-radius: 8px;
 }
 
 .video-card:hover {
@@ -41,4 +46,16 @@
 
 .star.favorited {
   color: gold;
+}
+
+@media (max-width: 768px) {
+  .video-card {
+    width: calc(50% - 20px);
+  }
+}
+
+@media (max-width: 480px) {
+  .video-card {
+    width: calc(100% - 20px);
+  }
 }
