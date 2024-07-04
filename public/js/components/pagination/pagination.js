@@ -1,4 +1,4 @@
-export function setupPagination(nextPageToken, prevPageToken, onPageChange) {
+function setupPagination(nextPageToken, prevPageToken, onPageChange) {
   fetch('/js/components/pagination/pagination.html')
     .then(response => response.text())
     .then(data => {
@@ -23,3 +23,5 @@ export function setupPagination(nextPageToken, prevPageToken, onPageChange) {
     })
     .catch(error => console.error('Error loading pagination:', error));
 }
+
+module.exports = { setupPagination };
