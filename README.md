@@ -1,5 +1,8 @@
 # YouTube Video List Project
 
+## Status
+Currently this project is not working properly due some changes I'm working on. You can still run the code but it will not work due lack of keys. I will update them soon but first I'm working on other projects. Please visit my other repositories to see more of my work.
+
 ## Overview
 
 This project is a simple web application built with HTML, CSS, JavaScript, and Node.js. It allows users to search for YouTube videos using the YouTube API and save their favorite videos. The project also includes user authentication and password recovery using Firebase Auth.
@@ -30,10 +33,6 @@ This project is a simple web application built with HTML, CSS, JavaScript, and N
 
     ```sh
     npm install
-
-3. **IMPORTANT ABOUT API_KEYS**
-    ```sh
-    Only for icasei test the API_KEYS were uploaded on .env to make it easier for evaluation. Later it will be deleted
 
 ### Running the Application
 **Start the server:**
